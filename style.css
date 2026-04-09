@@ -1,70 +1,88 @@
 body {
-    margin: 0;
-    font-family: Arial;
-    background: #f5f5f5;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  text-align: center;
+
+  
+  background-image: url("https://images.unsplash.com/photo-1506368249639-73a05d6f6488");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
 }
 
 
-header {
-    background: #ff6b6b;
-    color: white;
-    padding: 15px;
-    text-align: center;
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.6);
+  z-index: -1;
+}
+
+
+h1 {
+    margin-top: 20px;
+  color: #333;
 }
 
 
 .search-box {
-    text-align: center;
-    padding: 20px;
+  margin: 20px;
 }
 
-.search-box input {
-    padding: 10px;
-    width: 250px;
+input {
+  padding: 10px;
+  width: 250px;
+  border: none;
+  border-radius: 8px;
+  outline: none;
 }
 
-.search-box button {
-    padding: 10px;
-    background: #ff6b6b;
-    color: white;
-    border: none;
-    cursor: pointer;
+button {
+  padding: 10px 15px;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  background-color: #ff6f61;
+  color: white;
+  transition: 0.3s;
+}
+
+button:hover {
+  background-color: #ff3b2e;
 }
 
 
-.recipes {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    padding: 20px;
+#recipesContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 20px;
 }
 
-.card {
-    background: white;
-    padding: 10px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+
+.recipe {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: transform 0.2s;
 }
 
-.card img {
-    width: 100%;
-    border-radius: 10px;
+.recipe:hover {
+  transform: scale(1.05);
 }
 
-.card button {
-    margin-top: 10px;
-    padding: 8px;
-    background: #ff6b6b;
-    border: none;
-    color: white;
-    cursor: pointer;
+.recipe img {
+  width: 100%;
+  border-radius: 10px;
 }
 
-/* Details */
-.details {
-    background: white;
-    margin: 20px;
-    padding: 20px;
-    border-radius: 10px;
+
+.hidden {
+  display: none;
 }
