@@ -1,48 +1,50 @@
-# yum-hunt-recipe
-Recipe finder web using API
-# Yum Hunt – Recipe Finder Web App
+# 🍽 Yum Hunt - Recipe Finder Web App
 
-## Project Description
-Yum Hunt is a simple web application where users can search and explore different recipes using a public API. It helps users find meals easily by showing details like recipe name, ingredients, instructions, and images.
+## 📌 Project Description
+Yum Hunt is a web application that allows users to search and explore recipes using a public API. Users can filter, sort, and favorite recipes for a better experience.
 
-## Purpose
-The main purpose of this project is to learn and apply JavaScript concepts like API integration using fetch, and to build an interactive user interface. This project will also include features like searching, filtering, and sorting data.
+## 🎯 Purpose
+The purpose of this project is to provide users with an easy way to discover recipes based on their preferences.
 
-## API Used
-- TheMealDB API (from public API list)  
-- This API provides meal data including name, category, ingredients, and instructions  
+## 🌐 API Used
+TheMealDB API  
+https://www.themealdb.com/
 
-## Planned Features
-- Search recipes by name  
-- Display recipe details dynamically  
-- Filter recipes by category (veg, dessert, etc.)  
-- Sort recipes (A-Z, category, etc.)  
-- Add to favorites  
-- Dark / Light mode  
+## 🚀 Features
+- 🔍 Search recipes by name
+- 🎯 Filter recipes by category
+- 🔃 Sort recipes (A → Z, Z → A)
+- ❤️ Add/remove favorites (stored in LocalStorage)
+- 🌙 Dark Mode / Light Mode toggle
+- 📱 Responsive design
 
-## Technologies Used
-- HTML  
-- CSS  
-- JavaScript  
-- Fetch API  
+## 🛠 Technologies Used
+- HTML
+- CSS
+- JavaScript (Fetch API, DOM Manipulation)
+- LocalStorage
 
-## Setup Instructions
-1. Clone the repository  
-2. Open the project folder  
-3. Open index.html in browser  
-4. Add API integration in JavaScript (in next milestone)  
+## ⚙️ How to Run the Project
+1. Clone the repository:
+   git clone https://github.com/your-username/yum-hunt.git
 
-## Milestones
-- Milestone 1: Project planning and setup  
-- Milestone 2: API integration  
-- Milestone 3: Features implementation  
-- Milestone 4: Deployment  
+2. Open the project folder
 
-## Future Improvements
-- Pagination  
-- Debouncing search  
-- Local storage for favorites  
-- Improved UI design  
+3. Open index.html in your browser
 
-## Author
-Nikunj
+## 🌍 Deployment
+Project is deployed using GitHub Pages.
+
+## 📅 Milestones Completed
+- ✅ Milestone 1: Project Setup & Planning
+- ✅ Milestone 2: API Integration
+- ✅ Milestone 3: Core Features Implementation
+- ✅ Milestone 4: Documentation & Deployment
+
+## 💡 Future Improvements
+- Add pagination / infinite scroll
+- Add recipe details page
+- Improve UI design
+
+## 👨‍💻 Author
+Nikunj 

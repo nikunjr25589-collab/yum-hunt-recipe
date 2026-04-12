@@ -1,55 +1,107 @@
-const recipesContainer = document.getElementById("recipes");
-const detailsContainer = document.getElementById("details");
+const searchInput = document.getElementById("searchInput");
+const searchBtn = document.getElementById("searchBtn");
+const filterCategory = document.getElementById("filterCategory");
+const sortOption = document.getElementById("sortOption");
+const container = document.getElementById("recipes");
+const toggleTheme = document.getElementById("toggleTheme");
 
-function searchRecipes() {
-    const query = document.getElementById("searchInput").value;
+let allMeals = [];
+let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
-    fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`)
+
+fetchAllRecipes();
+
+function fetchAllRecipes() {
+  const letters = ["a", "b", "c", "d", "e"];
+
+  Promise.all(
+    letters.map(letter =>
+      fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${letter}`)
         .then(res => res.json())
-        .then(data => {
-            displayRecipes(data.meals);
-        });
+    )
+  )
+  .then(results => {
+    allMeals = results.flatMap(r => r.meals || []);
+    applyAll();
+  })
+  .catch(() => {
+    container.innerHTML = "<p>Error loading data</p>";
+  });
+}
+
+
+function applyAll() {
+  let data = [...allMeals];
+
+  const searchText = searchInput.value.toLowerCase();
+  data = data.filter(meal =>
+    meal.strMeal.toLowerCase().includes(searchText)
+  );
+
+  if (filterCategory.value !== "all") {
+    data = data.filter(meal =>
+      meal.strCategory.toLowerCase().includes(filterCategory.value.toLowerCase())
+    );
+  }
+
+  if (sortOption.value === "asc") {
+    data = [...data].sort((a, b) => a.strMeal.localeCompare(b.strMeal));
+  } else if (sortOption.value === "desc") {
+    data = [...data].sort((a, b) => b.strMeal.localeCompare(a.strMeal));
+  }
+
+  displayRecipes(data);
 }
 
 
 function displayRecipes(meals) {
-    recipesContainer.innerHTML = "";
-    detailsContainer.innerHTML = "";
+  if (meals.length === 0) {
+    container.innerHTML = "<p>No recipes found</p>";
+    return;
+  }
 
-    if (!meals) {
-        recipesContainer.innerHTML = "<p>No recipes found</p>";
-        return;
-    }
-
-    meals.forEach(meal => {
-        const div = document.createElement("div");
-        div.classList.add("card");
-
-        div.innerHTML = `
-            <img src="${meal.strMealThumb}">
-            <h3>${meal.strMeal}</h3>
-            <p>${meal.strCategory}</p>
-            <button onclick="showDetails('${meal.idMeal}')">
-                View Recipe
-            </button>
-        `;
-
-        recipesContainer.appendChild(div);
-    });
+  container.innerHTML = meals.map(meal => `
+    <div class="recipe">
+      <img src="${meal.strMealThumb}" />
+      <h3>${meal.strMeal}</h3>
+      <p>${meal.strCategory}</p>
+      <button onclick="toggleFavorite('${meal.idMeal}')">
+        ${favorites.includes(meal.idMeal) ? "❤️" : "🤍"}
+      </button>
+    </div>
+  `).join("");
 }
 
 
-function showDetails(id) {
-    fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
-        .then(res => res.json())
-        .then(data => {
-            const meal = data.meals[0];
+function toggleFavorite(id) {
+  if (favorites.includes(id)) {
+    favorites = favorites.filter(fav => fav !== id);
+  } else {
+    favorites.push(id);
+  }
 
-            detailsContainer.innerHTML = `
-                <h2>${meal.strMeal}</h2>
-                <img src="${meal.strMealThumb}" width="300">
-                <p><b>Category:</b> ${meal.strCategory}</p>
-                <p><b>Instructions:</b> ${meal.strInstructions}</p>
-            `;
-        });
+  localStorage.setItem("favorites", JSON.stringify(favorites));
+  applyAll();
+}
+
+
+searchInput.addEventListener("input", applyAll);
+searchBtn.addEventListener("click", applyAll);
+filterCategory.addEventListener("change", applyAll);
+sortOption.addEventListener("change", applyAll);
+
+
+toggleTheme.addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+
+  if (document.body.classList.contains("dark")) {
+    localStorage.setItem("theme", "dark");
+  } else {
+    localStorage.setItem("theme", "light");
+  }
+});
+
+
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark");
 }
